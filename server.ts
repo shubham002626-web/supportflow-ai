@@ -1,24 +1,10 @@
-import express from "express";
+import app from "./server/app";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import dotenv from "dotenv";
-import apiRoutes from "./server/api";
 
-dotenv.config();
+const PORT = Number(process.env.PORT) || 3002;
 
 async function startServer() {
-  const app = express();
-  const PORT = Number(process.env.PORT) || 3002; // fallback to avoid conflicts
-
-  app.use(express.json());
-
-  // API Routes
-  app.get("/api/health", (req, res) => {
-    res.json({ status: "ok", app: "SupportFlow AI" });
-  });
-
-  app.use("/api", apiRoutes);
-
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
@@ -28,7 +14,7 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
+    app.use(expressStatic(distPath));
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });
@@ -37,6 +23,12 @@ async function startServer() {
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
+}
+
+// A small helper in case express is not imported in this scope
+function expressStatic(distPath: string) {
+  const express = require("express");
+  return express.static(distPath);
 }
 
 startServer();

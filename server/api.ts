@@ -11,7 +11,20 @@ router.post("/ticket/analyze", async (req, res) => {
            return res.status(400).json({ error: "Message is required" });
         }
         
-        const insights = await generateTicketInsights(message);
+        let insights;
+        try {
+            insights = await generateTicketInsights(message);
+        } catch (e: any) {
+            console.error("AI Insight Gen error", e);
+            // Return mock insights fallback for hackathon demo purposes
+            insights = {
+                category: "Technical",
+                priority: "Medium",
+                sentiment: "Neutral",
+                summary: `Mock Analysis: "${message.substring(0, 40)}..." (Configure GEMINI_API_KEY for real AI analysis)`
+            };
+        }
+        
         res.json({ success: true, insights });
     } catch (e: any) {
         console.error("Analysis Error:", e);
