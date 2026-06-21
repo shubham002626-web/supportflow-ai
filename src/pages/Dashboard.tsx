@@ -4,10 +4,10 @@ import { Activity, Inbox, MessageSquare, Clock, Zap, TrendingUp, Sparkles, Bot }
 import { useAnalyticsData } from '../hooks/useAnalyticsData';
 
 const ACTIVITY_FEED = [
-  { icon: Bot, color: 'text-indigo-600', bg: 'bg-indigo-50', text: 'AI Assistant resolved ticket', highlight: 'SUP-4211', time: '2 mins ago' },
-  { icon: MessageSquare, color: 'text-slate-600', bg: 'bg-slate-100', text: 'New conversation started by', highlight: 'TechFlow Inc', time: '14 mins ago' },
-  { icon: Inbox, color: 'text-amber-600', bg: 'bg-amber-50', text: 'Escalated ticket', highlight: 'SUP-4209', time: '1 hour ago' },
-  { icon: Sparkles, color: 'text-emerald-600', bg: 'bg-emerald-50', text: 'AI auto-tagged 12 tickets as', highlight: 'Billing', time: '2 hours ago' },
+  { icon: Bot, color: 'text-black dark:text-white', bg: 'bg-zinc-100 dark:bg-zinc-900', text: 'AI Assistant resolved ticket', highlight: 'SUP-4211', time: '2 mins ago' },
+  { icon: MessageSquare, color: 'text-zinc-650 dark:text-zinc-350', bg: 'bg-zinc-100 dark:bg-zinc-900', text: 'New conversation started by', highlight: 'TechFlow Inc', time: '14 mins ago' },
+  { icon: Inbox, color: 'text-zinc-650 dark:text-zinc-350', bg: 'bg-zinc-100 dark:bg-zinc-900', text: 'Escalated ticket', highlight: 'SUP-4209', time: '1 hour ago' },
+  { icon: Sparkles, color: 'text-black dark:text-white', bg: 'bg-zinc-100 dark:bg-zinc-900', text: 'AI auto-tagged 12 tickets as', highlight: 'Billing', time: '2 hours ago' },
 ];
 
 export default function Dashboard() {
@@ -15,10 +15,10 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <div className="flex flex-col items-center gap-4 text-slate-500">
+      <div className="flex items-center justify-center h-[60vh] bg-white dark:bg-black">
+        <div className="flex flex-col items-center gap-4 text-zinc-550 dark:text-zinc-400">
           <Activity className="w-6 h-6 animate-pulse" />
-          <p className="text-sm font-medium">Loading analytics...</p>
+          <p className="text-sm font-semibold">Loading analytics...</p>
         </div>
       </div>
     );
@@ -26,8 +26,8 @@ export default function Dashboard() {
 
   if (error) {
     return (
-      <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-md max-w-lg">
-        <p className="font-semibold text-sm">Failed to load overview</p>
+      <div className="p-4 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-md max-w-lg">
+        <p className="font-bold text-sm">Failed to load overview</p>
         <p className="text-sm mt-1">{error}</p>
       </div>
     );
@@ -35,11 +35,11 @@ export default function Dashboard() {
 
   const getIcon = (iconName: string) => {
     switch (iconName) {
-      case 'Ticket': return <Inbox className="w-5 h-5" />;
-      case 'Sparkles': return <Zap className="w-5 h-5" />;
-      case 'Clock': return <Clock className="w-5 h-5" />;
-      case 'AlertCircle': return <Activity className="w-5 h-5" />;
-      default: return <Activity className="w-5 h-5" />;
+      case 'Ticket': return <Inbox className="w-5 h-5 text-black dark:text-white" />;
+      case 'Sparkles': return <Zap className="w-5 h-5 text-black dark:text-white" />;
+      case 'Clock': return <Clock className="w-5 h-5 text-black dark:text-white" />;
+      case 'AlertCircle': return <Activity className="w-5 h-5 text-black dark:text-white" />;
+      default: return <Activity className="w-5 h-5 text-black dark:text-white" />;
     }
   };
 
@@ -48,11 +48,11 @@ export default function Dashboard() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 mb-1">Dashboard Overview</h1>
-          <p className="text-sm text-slate-500">Monitor your team's performance and AI automation metrics.</p>
+          <h1 className="text-2xl font-black text-black dark:text-white mb-1">Dashboard Overview</h1>
+          <p className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">Monitor your team's performance and AI automation metrics.</p>
         </div>
         <div className="flex items-center gap-2">
-           <select className="text-sm border-standard rounded-md bg-white px-3 py-1.5 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500">
+           <select className="text-sm border border-zinc-350 dark:border-zinc-750 rounded-md bg-white dark:bg-zinc-900 px-3 py-1.5 shadow-sm focus:outline-none focus:border-black dark:focus:border-white text-black dark:text-white font-bold">
              <option>Last 7 Days</option>
              <option>Last 30 Days</option>
              <option>This Quarter</option>
@@ -63,20 +63,16 @@ export default function Dashboard() {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, i) => (
-          <div key={i} className="pro-card p-5">
+          <div key={i} className="pro-card p-5 bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-850">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-medium text-slate-500">{stat.title}</span>
-              <div className="text-slate-400">
+              <span className="text-sm font-bold text-zinc-550 dark:text-zinc-450">{stat.title}</span>
+              <div className="text-black dark:text-white">
                 {getIcon(stat.iconName)}
               </div>
             </div>
             <div className="flex items-end justify-between mt-auto">
-              <span className="text-3xl font-bold text-slate-900">{stat.value}</span>
-              <span className={`text-xs font-semibold px-2 py-1 rounded-full flex items-center gap-1 ${
-                stat.trend.startsWith('+')
-                  ? 'text-emerald-700 bg-emerald-50'
-                  : 'text-red-700 bg-red-50'
-              }`}>
+              <span className="text-3xl font-black text-black dark:text-white">{stat.value}</span>
+              <span className="text-xs font-bold px-2 py-1 rounded border border-black dark:border-white text-black dark:text-white bg-zinc-50 dark:bg-zinc-900 flex items-center gap-1">
                 {stat.trend.startsWith('+') && <TrendingUp className="w-3 h-3" />}
                 {stat.trend}
               </span>
@@ -88,15 +84,15 @@ export default function Dashboard() {
       {/* Charts Panel */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Ticket Volume Chart */}
-        <div className="lg:col-span-2 pro-card p-6">
+        <div className="lg:col-span-2 pro-card p-6 bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-850">
           <div className="flex items-start justify-between mb-6">
             <div>
-              <h3 className="text-base font-semibold text-slate-900">Ticket Volume</h3>
-              <p className="text-sm text-slate-500">Incoming vs Resolved</p>
+              <h3 className="text-base font-bold text-black dark:text-white">Ticket Volume</h3>
+              <p className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">Incoming vs Resolved</p>
             </div>
-            <div className="flex items-center gap-4 text-sm text-slate-600">
-              <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded bg-indigo-600" /> Incoming</span>
-              <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded bg-emerald-500" /> Resolved</span>
+            <div className="flex items-center gap-4 text-sm font-bold text-black dark:text-white">
+              <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded bg-black dark:bg-white" /> Incoming</span>
+              <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded border border-black dark:border-white bg-transparent" /> Resolved</span>
             </div>
           </div>
 
@@ -105,49 +101,54 @@ export default function Dashboard() {
               <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorTickets" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2563eb" stopOpacity={0.1}/>
-                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#000000" stopOpacity={0.15}/>
+                    <stop offset="95%" stopColor="#000000" stopOpacity={0}/>
                   </linearGradient>
                   <linearGradient id="colorResolved" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.1}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#71717a" stopOpacity={0.15}/>
+                    <stop offset="95%" stopColor="#71717a" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorTicketsDark" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#ffffff" stopOpacity={0.15}/>
+                    <stop offset="95%" stopColor="#ffffff" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e4e4e7" className="dark:stroke-zinc-800" />
+                <XAxis dataKey="name" stroke="#71717a" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#71717a" fontSize={12} tickLine={false} axisLine={false} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#fff',
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid #e4e4e7',
                     borderRadius: '8px',
                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                   }}
-                  itemStyle={{ color: '#0f172a', fontSize: '14px', fontWeight: 500 }}
-                  labelStyle={{ color: '#64748b', fontSize: '12px', marginBottom: '4px' }}
+                  itemStyle={{ color: '#000000', fontSize: '14px', fontWeight: 700 }}
+                  labelStyle={{ color: '#71717a', fontSize: '12px', marginBottom: '4px' }}
                 />
-                <Area type="monotone" dataKey="tickets" stroke="#2563eb" strokeWidth={2} fillOpacity={1} fill="url(#colorTickets)" />
-                <Area type="monotone" dataKey="resolved" stroke="#10b981" strokeWidth={2} fillOpacity={1} fill="url(#colorResolved)" />
+                <Area type="monotone" dataKey="tickets" stroke="#000" strokeWidth={2} fillOpacity={1} fill="url(#colorTickets)" />
+                <Area type="monotone" dataKey="resolved" stroke="#71717a" strokeWidth={2} strokeDasharray="4 4" fillOpacity={1} fill="url(#colorResolved)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* AI Efficiency Card */}
-        <div className="lg:col-span-1 pro-card p-6 flex flex-col">
+        <div className="lg:col-span-1 pro-card p-6 flex flex-col bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-850">
           <div className="mb-6">
-            <h3 className="text-base font-semibold text-slate-900">Automation Rate</h3>
-            <p className="text-sm text-slate-500">AI vs Human Resolution</p>
+            <h3 className="text-base font-bold text-black dark:text-white">Automation Rate</h3>
+            <p className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">AI vs Human Resolution</p>
           </div>
 
           <div className="flex-1 flex flex-col items-center justify-center text-center">
             <div className="relative w-40 h-40 mb-6 flex items-center justify-center">
               <svg className="w-full h-full -rotate-90 absolute inset-0" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="42" fill="none" stroke="#f1f5f9" strokeWidth="12" />
+                <circle cx="50" cy="50" r="42" fill="none" stroke="#f4f4f5" className="dark:stroke-zinc-900" strokeWidth="12" />
                 <circle
                   cx="50" cy="50" r="42"
                   fill="none"
-                  stroke="#2563eb"
+                  stroke="#000000"
+                  className="dark:stroke-white"
                   strokeWidth="12"
                   strokeDasharray="264"
                   strokeDashoffset="39.6"
@@ -155,15 +156,15 @@ export default function Dashboard() {
                 />
               </svg>
               <div className="relative flex flex-col items-center justify-center">
-                <span className="text-4xl font-bold text-slate-900">85%</span>
+                <span className="text-4xl font-black text-black dark:text-white">85%</span>
               </div>
             </div>
 
-            <p className="text-sm text-slate-600 mb-8 leading-relaxed px-4">
+            <p className="text-sm font-semibold text-zinc-650 dark:text-zinc-350 mb-8 leading-relaxed px-4">
               Requests resolved by AI without human intervention today.
             </p>
 
-            <button className="w-full py-2 px-4 rounded-md bg-white border-standard text-slate-700 font-medium text-sm hover:bg-slate-50 transition-colors shadow-sm">
+            <button className="w-full py-2.5 px-4 rounded-md bg-black dark:bg-white text-white dark:text-black font-bold text-sm hover:bg-zinc-850 dark:hover:bg-zinc-150 transition-colors shadow-sm">
               View Analytics Report
             </button>
           </div>
@@ -171,25 +172,25 @@ export default function Dashboard() {
       </div>
 
       {/* Activity Feed */}
-      <div className="pro-card overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-slate-900">Recent Activity</h2>
-          <button className="text-sm text-indigo-600 hover:text-indigo-700 font-medium">
+      <div className="pro-card overflow-hidden bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-850">
+        <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-850 bg-zinc-50 dark:bg-zinc-900/60 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-black dark:text-white">Recent Activity</h2>
+          <button className="text-sm text-black dark:text-white hover:underline font-bold">
             View all
           </button>
         </div>
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-zinc-100 dark:divide-zinc-850">
           {ACTIVITY_FEED.map((item, i) => (
-            <div key={i} className="px-6 py-4 flex items-center justify-between text-sm hover:bg-slate-50/50 transition-colors">
+            <div key={i} className="px-6 py-4 flex items-center justify-between text-sm hover:bg-zinc-50 dark:hover:bg-zinc-900/40 transition-colors">
               <div className="flex items-center gap-4">
-                <div className={`w-8 h-8 rounded-full ${item.bg} flex items-center justify-center shrink-0`}>
+                <div className={`w-8 h-8 rounded ${item.bg} flex items-center justify-center shrink-0 border border-zinc-200 dark:border-zinc-850`}>
                   <item.icon className={`w-4 h-4 ${item.color}`} />
                 </div>
-                <span className="text-slate-700">
-                  {item.text} <span className="font-medium text-slate-900">{item.highlight}</span>
+                <span className="text-zinc-850 dark:text-zinc-200 font-medium">
+                  {item.text} <span className="font-bold text-black dark:text-white">{item.highlight}</span>
                 </span>
               </div>
-              <span className="text-slate-500 text-xs shrink-0 ml-4">{item.time}</span>
+              <span className="text-zinc-500 dark:text-zinc-400 text-xs shrink-0 ml-4 font-semibold">{item.time}</span>
             </div>
           ))}
         </div>
